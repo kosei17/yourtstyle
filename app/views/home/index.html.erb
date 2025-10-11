@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yourstyle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/stylesheets/application.css"> </head>
+<body>
+    
+
+
+    <div class="container mx-auto relative z-10">
+
+        <header class="flex justify-between items-center mb-10 text-black">
+            <h1 class="text-3xl font-bold text-yellow-500">yourstyle</h1>
+            <div class="flex space-x-4">
+                <a href="#" class="header-link hover:text-gray-400">Login</a>
+                <a href="#" class="header-link hover:text-gray-400">Register</a>
+            </div>
+        </header>
+
+        <section class="text-center py-20">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4 leading-tight text-yellow-500">
+                FIND YOUR UNIQUE<br>STYLE
+            </h2>
+            <p class="text-lg mb-8 text-yellow-500">
+                The ultimate platform for fashion lovers to share,<br>discover, and create.
+            </p>
+            <%= link_to "DISCOVER NOW",
+            user_signed_in? ? mypage_path : new_user_session_path,
+            class: "btn" %>
+
+
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-10">
+            <div class="input-box">
+                <span>Featured Style 1</span>
+            </div>
+            <div class="input-box">
+                <span>Featured Style 2</span>
+            </div>
+            <div class="input-box">
+                <span>Featured Style 3</span>
+            </div>
+        </section>
+        
+    </div>
+
+</body>
+</html>

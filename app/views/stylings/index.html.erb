@@ -1,0 +1,32 @@
+<div class="page-container">
+  <%= link_to "マイページ", mypage_path, class: "link-header" %> |
+  <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-header" %>
+
+  <h1 class="page-title">みんなのスタイリング</h1>
+
+  <div class="grid-pad">
+    <ul class="style-grid">
+      <% @stylings.each do |s| %>
+        <li class="style-card">
+          <% if s.photo.attached? %>
+            <%= link_to select_category_styling_path(s), aria: { label: "このスタイリングにアイテムを提案する" } do %>
+  <%= image_tag s.photo.variant(resize_to_fill: [400, 400]) %>
+<% end %>
+
+            <div class="noimage">No Image</div>
+          <% end %>
+
+          <div class="meta">
+            <div class="caption"><%= s.caption.presence || "(no caption)" %></div>
+            <%# 価格を範囲で保存しているなら表示を調整（なければ消してOK） %>
+            <% if s.respond_to?(:min_price) && s.min_price.present? %>
+              <div class="price">¥<%= s.min_price %> 〜 ¥<%= s.max_price %></div>
+            <% else %>
+              <div class="price">¥<%= s.price %></div>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="page-container">
+  <!-- ヘッダー -->
+  <div class="mypage-header">
+    <%= link_to "マイページ", mypage_path, class: "link-header" %> |
+    <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-header" %>
+  </div>
+
+  <!-- スタイリング詳細 -->
+  <div class="styling-detail">
+    <% if @styling.photo.attached? %>
+      <%= image_tag @styling.photo.variant(resize_to_limit: [600, 600]),
+          class: "styling-photo" %>
+    <% else %>
+      <div class="noimg">No image</div>
+    <% end %>
+
+    <div class="styling-meta">
+      <h2 class="caption"><%= @styling.caption.presence || "(no caption)" %></h2>
+      <% if @styling.min_price && @styling.max_price %>
+        <p class="price">¥<%= @styling.min_price %> 〜 ¥<%= @styling.max_price %></p>
+      <% else %>
+        <p class="price">¥<%= @styling.price %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- このスタイリングへのアイテム提案 -->
+  <div class="proposals">
+    <h3 class="pill">他の人からの提案アイテム</h3>
+    <% if @proposed_items.present? %>
+      <ul class="thumb-grid">
+        <% @proposed_items.each do |item| %>
+          <li class="card">
+            <% if item.image.attached? %>
+              <%= image_tag item.image.variant(resize_to_fill: [180, 180]) %>
+            <% else %>
+              <div class="noimg">No image</div>
+            <% end %>
+            <div class="meta">
+              <span class="caption"><%= item.name %></span><br>
+              <span class="price">¥<%= item.price %></span>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>まだ提案アイテムはありません。</p>
+    <% end %>
+  </div>
+
+  <!-- 提案ボタン -->
+  <div class="side-actions">
+    <%= link_to "アイテムを提案する", select_category_styling_path(@styling), class: "btn-rect" %>
+  </div>
+</div>

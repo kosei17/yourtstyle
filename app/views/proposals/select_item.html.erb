@@ -1,0 +1,20 @@
+<h2><%= @category.capitalize %> から提案</h2>
+
+<% if @items.any? %>
+  <ul>
+    <% @items.each do |i| %>
+      <li style="margin:8px 0;">
+        <% if i.image.attached? %>
+          <%= image_tag i.image.variant(resize_to_limit: [80,80]) %>
+        <% end %>
+        <%= i.name %> (¥<%= i.price %>)
+        <%= button_to "このアイテムを提案する",
+                      proposals_styling_path(@styling, item_id: i.id),
+                      method: :post %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>このカテゴリのアイテムがありません。</p>
+  <%= link_to "アイテムを登録する", new_item_path %>
+<% end %>

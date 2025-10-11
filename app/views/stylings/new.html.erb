@@ -1,0 +1,56 @@
+<div class="new-styling">
+  <h1 class="page-title">スタイリング投稿</h1>
+
+  <div class="form-box">
+    <%= form_with model: @styling do |f| %>
+
+      <!-- Photo（隠しfile + 緑ボタンラベル） -->
+      <div class="form-row">
+        <label class="form-label">Photo</label>
+        <div class="file-pick">
+          <label class="btn-rect file-trigger">ファイルを選択</label>
+          <%= f.file_field :photo, class: "file-hidden", accept: "image/*" %>
+          <span class="file-name" id="js-file-name">選択されていません</span>
+        </div>
+      </div>
+
+     <!-- Price（範囲指定） -->
+<div class="form-row">
+  <label class="form-label">Price</label>
+  <div class="price-range">
+    <%= f.number_field :min_price, class: "input-green", min: 0, placeholder: "最低価格" %>
+    <span class="tilde">〜</span>
+    <%= f.number_field :max_price, class: "input-green", min: 0, placeholder: "最高価格" %>
+  </div>
+</div>
+
+
+      <!-- Caption（緑の入力） -->
+      <div class="form-row">
+        <label class="form-label">Caption</label>
+        <%= f.text_area :caption, class: "input-green", rows: 4, placeholder: "説明を書いてください" %>
+      </div>
+
+      <!-- 送信：緑ボタン -->
+      <div class="form-actions">
+        <%= f.submit "Post styling", class: "btn-rect" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<!-- ファイル名表示だけ JS で差し替え -->
+<script>
+  (function(){
+    const input = document.querySelector('.file-hidden');
+    const trigger = document.querySelector('.file-trigger');
+    const nameBox = document.getElementById('js-file-name');
+    if (trigger && input) {
+      trigger.addEventListener('click', function(){ input.click(); });
+      input.addEventListener('change', function(e){
+        nameBox.textContent = input.files[0] ? input.files[0].name : "選択されていません";
+      });
+    }
+  })();
+</script>

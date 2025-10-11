@@ -1,0 +1,64 @@
+<%# 背景をトップと同じ写真にするクラス %>
+<% content_for :body_class, "page--photo-bg" %>
+
+<div class="page-container" style="max-width:1100px; margin:0 auto; padding:24px;">
+  <div class="mypage-header" style="margin-bottom:16px;">
+    <%= link_to "マイページ", mypage_path, class: "link-header" %> |
+    <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-header" %>
+  </div>
+
+  <h2 class="page-title" style="margin-bottom:18px;">
+    <%= @styling.caption.presence || "スタイリング" %> へのアイテム提案
+  </h2>
+
+  <div class="mypage-body" style="display:grid; grid-template-columns: 260px 1fr; gap:24px; align-items:start;">
+
+    <%# ===== 左：カテゴリ選択（緑ボタン） ===== %>
+    <div>
+      <div class="pill" style="display:inline-block; margin-bottom:12px;">カテゴリを選ぶ</div>
+
+      <div class="side-actions" style="display:flex; flex-direction:column; gap:12px;">
+        <%= link_to "TOPS",    select_item_styling_path(@styling, category: "tops"),    class: "btn-rect" %>
+        <%= link_to "BOTTOMS", select_item_styling_path(@styling, category: "bottoms"), class: "btn-rect" %>
+        <%= link_to "OTHERS",  select_item_styling_path(@styling, category: "others"),  class: "btn-rect" %>
+
+        <%= link_to "アイテムを登録する", new_item_path, class: "btn-rect", style: "margin-top:8px;" %>
+      </div>
+    </div>
+
+    <%# ===== 右：選択スタイリング + 他の人からの提案 を黄色グリッド上に ===== %>
+    <div class="paper-grid">
+      <div class="paper-grid__inner">
+        <% if @styling.photo.attached? %>
+          <%= image_tag @styling.photo.variant(resize_to_limit: [1000, 1000]),
+                        style: "width:100%; height:auto; display:block;
+                                border-radius:12px; border:3px solid #111;
+                                box-shadow:0 8px 0 rgba(0,0,0,.18);" %>
+        <% end %>
+
+        <h3 class="pill" style="margin:16px 0 8px;">他の人からの提案</h3>
+
+        <% if @proposed_items.present? %>
+          <ul class="style-grid" style="margin-top:10px;">
+            <% @proposed_items.each do |it| %>
+              <li class="style-card">
+                <% if it.image.attached? %>
+                  <%= image_tag it.image.variant(resize_to_fill: [200,200]) %>
+                <% else %>
+                  <div class="noimage">No Image</div>
+                <% end %>
+                <div class="meta">
+                  <div class="caption"><%= it.name %></div>
+                  <div class="price">¥<%= it.price %></div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>このカテゴリーのアイテムがありません。</p>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

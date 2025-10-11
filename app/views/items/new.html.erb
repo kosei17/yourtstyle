@@ -1,0 +1,56 @@
+<% content_for :body_class, "page--photo-bg" %>
+
+<div class="form-wrap">
+  <div class="form-card">
+    <h1 class="title-hero">アイテム登録</h1>
+
+    <%= form_with model: @item, html: { class: "styled-form" } do |f| %>
+      <%= hidden_field_tag :styling_id, params[:styling_id] %>
+
+      <div class="form-field">
+        <label class="pill">Category</label>
+        <%= f.select :category,
+              Item.categories.keys.map { |k| [k.titleize, k] },
+              {},
+              class: "input-pill" %>
+      </div>
+
+      <div class="form-field">
+        <label class="pill">Name</label>
+        <%= f.text_field :name,
+              class: "input-pill",
+              placeholder: "例) リネンシャツ" %>
+      </div>
+
+      <div class="form-field">
+  <label class="pill">Price</label>
+  <div>
+  <%= f.label :price, "Price" %>
+  <%= f.number_field :price, class: "input-pill", min: 0, step: 100 %>
+</div>
+
+
+
+      <div class="form-field">
+        <label class="pill">Image</label>
+        <%= f.file_field :image, class: "input-file" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "登録", class: "btn-rect" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @styling&.photo&.attached? %>
+    <div class="paper-grid">
+      <div class="paper-grid__inner">
+        <%= image_tag @styling.photo.variant(resize_to_limit: [1000, 1000]),
+              style: "width:100%; height:auto; display:block;
+                      border-radius:12px; border:3px solid #111;
+                      box-shadow:0 8px 0 rgba(0,0,0,.18);" %>
+        <p class="hint">このスタイリングに提案として紐づけられます</p>
+      </div>
+    </div>
+  <% end %>
+</div>
