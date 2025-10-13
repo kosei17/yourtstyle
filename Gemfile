@@ -21,6 +21,9 @@ gem "image_processing", "~> 1.2"
 # Devise（ユーザー認証）
 gem "devise", "~> 4.9"
 
+gem "cloudinary"
+gem "activestorage-cloudinary-service"
+
 # Windows用
 gem "tzinfo-data", platforms: %i[windows jruby]
 
