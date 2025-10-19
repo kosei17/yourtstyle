@@ -45,7 +45,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
-# 本番環境はPostgreSQL
-group :production do
-  gem "pg", "~> 1.4"
+# 本番環境でもPostgreSQLを使う
+gem "pg", "~> 1.4"
+
+group :development, :test do
+  gem "sqlite3", "~> 1.4"
+  gem "debug", platforms: %i[mri windows]
 end
